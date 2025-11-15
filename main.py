@@ -47,7 +47,7 @@ async def predict_catch(data: PlayData):
         return {"error": "モデルが読み込まれていません。"}, 500
 
     try:
-        #Unityからのデータを使って「特徴量」を計算
+        # Unityからのデータを使って「特徴量」を計算
         distance_to_ball = np.sqrt(
             (data.player_x - data.ball_x)**2 +
             (data.player_z - data.ball_z)**2
