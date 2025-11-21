@@ -1,11 +1,17 @@
 [project]
 name = "data-palette-backend"
 version = "0.1.0"
-description = "Add your description here"
+description = "Data Palette backend API and ML model"
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.10"
+
 dependencies = [
-    "fastapi>=0.121.2",
-    "tensorflow>=2.20.0",
-    "uvicorn>=0.38.0",
+    "fastapi",
+    "tensorflow",
+    "uvicorn",
+    "pandas",
+    "numpy",
+    "scikit-learn",
+    "joblib",
+    "pydantic",
 ]
