@@ -1,34 +1,35 @@
 from fastapi import FastAPI
+from schemas import DefensiveRangeResponse
 import pandas as pd
 import numpy as np
 import os
-from schemas import DefensiveRangeResponse
 
 app = FastAPI()
 
-CSV_FILE_PATH = "dummy_data.csv"
+
+CSV_FILE_PATH = "result.csv"
 
 @app.get("/get_defensive_range", response_model=DefensiveRangeResponse)
 async def get_defensive_range():
     
     if not os.path.exists(CSV_FILE_PATH):
         return DefensiveRangeResponse(
-            status="error",
-            effective_range=0.0,
-            message="データファイルがありません"
+            status="error", effective_range=0.0, message="CSVファイルが見つかりません"
         )
 
     df = pd.read_csv(CSV_FILE_PATH)
-    caught_df = df[df['is_caught'].astype(str).str.lower() == 'true']
+
+    #catch_resultが True のデータだけを抽出
+    caught_df = df[df['catch_result'].astype(str).str.lower() == 'true']
 
     if caught_df.empty:
         return DefensiveRangeResponse(
-            status="success",
-            effective_range=0.0,
-            message="データなし"
+            status="success", effective_range=0.0, message="データなし"
         )
 
-    distances = caught_df['distance'].values
+    #distance_from_startの列を取り出す
+    distances = caught_df['distance_from_start'].values
+
     distances.sort()
     effective_range = np.percentile(distances, 95)
 
