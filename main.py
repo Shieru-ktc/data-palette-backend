@@ -17,10 +17,10 @@ async def get_defensive_range():
             status="error", effective_range=0.0, message="CSVファイルが見つかりません"
         )
 
-    df = pd.read_csv(CSV_FILE_PATH)
+    df = pd.read_csv(CSV_FILE_PATH, dtype={'catch_result': 'boolean'})
 
     #catch_resultが True のデータだけを抽出
-    caught_df = df[df['catch_result'].astype(str).str.lower() == 'true']
+    caught_df = df[df['catch_result']]
 
     if caught_df.empty:
         return DefensiveRangeResponse(
